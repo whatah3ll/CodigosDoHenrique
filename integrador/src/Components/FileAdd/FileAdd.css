@@ -1,0 +1,31 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  height: 300px;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.form input {
+  display: none;
+}
+.custom-file-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border: solid 2px #eee;
+  border-radius: 6px;
+  width: 300px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.custom-file-upload:hover {
+  background-color: #eee;
+  color: black;
+}
+.containerBtn{
+  width: 343px;
+}

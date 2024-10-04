@@ -1,0 +1,171 @@
+import { useNavigate } from "react-router-dom";
+import prodFetch from "../../axios/config.js";
+import { useEffect, useState } from "react";
+
+import Button from "../Button/Button";
+
+import "./AutoForm.css";
+
+function AutoForm() {
+  const produtos = JSON.parse(window.localStorage.getItem("produtos"));
+  console.log(produtos);
+  const navigate = useNavigate();
+
+  const onClickFuncSair = () => {
+    return navigate("/");
+  };
+
+  const [nome, setNome] = useState();
+  const [tipo, setTipo] = useState();
+  const [precobase, setPrecoBase] = useState();
+  const [multimposto, setMultimposto] = useState();
+  const [precoreal, setPrecoReais] = useState();
+
+  const definirValorComDelay = (id, valor, delay) => {
+    setTimeout(() => {
+      document.getElementById(id).value = valor;
+    }, delay);
+  };
+
+  // const automation = (produto) => {
+  //   definirValorComDelay("produto", produto["Produtos"], 1000);
+  //   definirValorComDelay("tipo", produto["Tipo"], 1000);
+  //   definirValorComDelay("precoOri", produto["Preço Base Original"], 1000);
+  //   definirValorComDelay("imposto", produto["Multiplicador Imposto"], 1000);
+  //   definirValorComDelay("precoReal", produto["Preço Base Reais"], 1000);
+  // };
+
+  const preencherEEnviar = async () => {
+    for (const dado of produtos) {
+      console.log(dado.Produtos);
+      setNome(dado["Produtos"]);
+      setTipo(dado["Tipo"]);
+      setPrecoBase(dado["Preço Base Original"]);
+      setMultimposto(dado["Multiplicador Imposto"]);
+      setPrecoReais(dado["Preço Base Reais"]);
+      // Aguarde até que o formulário seja preenchido e então envie
+      await addProd();
+    }
+  };
+
+  const addProd = async () => {
+    try {
+      await prodFetch.post("/formulario", {
+        nome: nome,
+        precobase: precobase,
+        tipo: tipo,
+        multimposto: multimposto,
+        precoreais: precoreal,
+      });
+      document.getElementById("produto").value = "";
+      document.getElementById("tipo").value = "";
+      document.getElementById("precoOri").value = "";
+      document.getElementById("imposto").value = "";
+      document.getElementById("precoReal").value = "";
+    } catch (error) {
+      if (error.response) {
+        // The server responded with a status code outside the 2xx range
+        console.log("Error response:", error.response);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.log("Error request:", error.request);
+      } else {
+        // Something happened in setting up the request that triggered an error
+        console.log("Error message:", error.message);
+      }
+    }
+  };
+
+  useEffect(() => {
+    preencherEEnviar();
+  }, []);
+
+  return (
+    <div className="autoForm">
+      <h1>Formulario de produtos</h1>
+      <div className="containerProd">
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <label htmlFor="produto">Produto</label>
+          <input
+            type="text"
+            name="produto"
+            id="produto"
+            value={nome}
+            placeholder="Digite o nome do produto:"
+            onChange={(e) => {
+              setNome(e.target.value);
+            }}
+          />
+        </div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <label htmlFor="tipo">Tipo</label>
+          <input
+            type="text"
+            name="tipo"
+            id="tipo"
+            value={tipo}
+            placeholder="Serviço..."
+            onChange={(e) => {
+              setTipo(e.target.value);
+            }}
+          />
+        </div>
+      </div>
+      <div className="containerPreco">
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <label htmlFor="precoOri">Preço</label>
+          <input
+            type="number"
+            name="precoOri"
+            id="precoOri"
+            value={precobase}
+            placeholder="Preço original:"
+            onChange={(e) => {
+              setPrecoBase(e.target.value);
+            }}
+          />
+        </div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <label htmlFor="imposto">Imposto</label>
+          <input
+            type="number"
+            name="imposto"
+            id="imposto"
+            value={multimposto}
+            placeholder="Multiplicador:"
+            onChange={(e) => {
+              setMultimposto(e.target.value);
+            }}
+          />
+        </div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <label htmlFor="precoReal">Preço real</label>
+          <input
+            type="number"
+            name="precoReal"
+            id="precoReal"
+            value={precoreal}
+            placeholder="Preço em real:"
+            onChange={(e) => {
+              setPrecoReais(e.target.value);
+            }}
+          />
+        </div>
+      </div>
+      <div className="containerBtns">
+        <div className="containerBtnSalvar">
+          <Button className="btnSalvar" onClickFunc={addProd}>
+            Salvar
+          </Button>
+        </div>
+        <div className="containerBtnSair">
+          <Button className="btnSair" onClickFunc={onClickFuncSair}>
+            Sair
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default AutoForm;

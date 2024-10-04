@@ -1,0 +1,10 @@
+.container{
+    display: inline-block;
+    background-color: black;
+    color: white;
+    min-height: 380px;
+    border: solid 2px #eee;
+    border-radius: 8px;
+    margin: 145px auto;
+    padding: 30px;
+}

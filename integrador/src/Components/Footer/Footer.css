@@ -1,0 +1,15 @@
+.footer {
+  display: flex;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: black;
+  border-top: solid 2px #eee;
+}
+.footer h2 {
+  font-size: 1rem;
+  font-weight: 500;
+}

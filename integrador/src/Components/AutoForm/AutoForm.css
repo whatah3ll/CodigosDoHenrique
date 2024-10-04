@@ -1,0 +1,54 @@
+.autoForm {
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  height: 350px;
+  align-items: center;
+  gap: 2rem;
+  justify-content: center;
+}
+.containerProd {
+  margin-bottom: 15px;
+}
+.containerProd,
+.containerPreco {
+  display: flex;
+  gap: 2rem;
+}
+.containerLoading {
+  width: 400px;
+}
+.containerBtns {
+  display: flex;
+  gap: 1rem;
+  position: relative;
+  top: 13px;
+  left: 135px;
+}
+.containerBtnSalvar,
+.containerBtnSair {
+  display: flex;
+  width: 100px;
+}
+#produto {
+  width: 250px;
+}
+#tipo,
+#precoOri,
+#imposto,
+#precoReal {
+  width: 100px;
+}
+#produto,
+#tipo,
+#precoOri,
+#imposto,
+#precoReal {
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #444;
+  color: #eee;
+  font-size: 16px;
+}
